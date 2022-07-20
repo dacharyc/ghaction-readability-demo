@@ -1,4 +1,4 @@
-# ghaction-readability-demo
+# GitHub Action Readability Demo
 
 Demo files for a GitHub Action that checks docs for readability. Derived 
 from content at [mongodb/docs-realm](https://github.com/mongodb/docs-realm).
