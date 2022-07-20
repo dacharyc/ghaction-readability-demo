@@ -1,0 +1,28 @@
+name: Readability
+
+on: pull_request
+
+env:
+  PATHS_TO_FILES: This should be an array of paths to files that are changed in the PR that we want to convert to text for scoring
+
+jobs:
+  getText:
+    name: Get text to score
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get docdoctor
+        uses: actions/checkout@v3
+        with: 
+          repository: dacharyc/docdoctor
+          ref: 'readability'
+          path: 'docdoctor'
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15.x
+      - name: Generate text from rST
+        working-directory: docdoctor
+        run: |
+          npm i
+          npm run build
+          node . getReadabilityText $PATHS_TO_FILES
