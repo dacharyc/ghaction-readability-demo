@@ -10,3 +10,7 @@ This demo is intended to show extracting a subset of text from the rST,
 scoring that text for readability, and reporting that score on a MongoDB 
 docs PR. We use only a subset of the text, throwing out elements that 
 would skew the readability score, such as code examples and markup.
+
+It uses a forked version of docdoctor available at
+[dacharyc/docdoctor](https://github.com/dacharyc/docdoctor) in the 
+[readabilty branch](https://github.com/dacharyc/docdoctor/tree/readability).
