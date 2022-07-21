@@ -3,7 +3,7 @@ name: Readability
 on: pull_request
 
 env:
-  PATHS_TO_FILES: This should be an array of paths to files that are changed in the PR that we want to convert to text for scoring
+  PATHS_TO_FILES: This should be a space-delimited selection of paths to files that are changed in the PR that we want to convert to text for scoring
 
 jobs:
   getText:
