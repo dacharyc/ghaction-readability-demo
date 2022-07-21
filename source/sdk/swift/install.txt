@@ -35,7 +35,7 @@ meets the following prerequisites:
 .. note::
 
    There are special considerations when using Realm Database with
-   tvOS. See :ref:`ios-tvos` for more information.
+   tvOS. See Build with tvOS for more information.
 
 Installation
 ------------
