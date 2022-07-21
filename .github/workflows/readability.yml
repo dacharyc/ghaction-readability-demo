@@ -26,7 +26,6 @@ jobs:
         with:
           node-version: 15.x
       - name: Generate text from rST
-        working-directory: docdoctor
         run: |
           npm i
           npm run build
