@@ -10,8 +10,10 @@ jobs:
       - name: Get file paths for files to score
         id: getPaths
         uses: jitterbit/get-changed-files@v1
+      - name: List changed file paths to variable
+        id: listPaths
         run: |
-          echo '::set-output name=CHANGED_FILE_PATHS::${{ steps.files.outputs.all }}'
+          echo '::set-output name=CHANGED_FILE_PATHS::${{ steps.getPaths.outputs.all_changed_files }}'
       - name: Get docdoctor
         uses: actions/checkout@v3
         with: 
@@ -27,4 +29,4 @@ jobs:
         run: |
           npm i
           npm run build
-          node . getReadabilityText ${{ steps.getPaths.outputs.CHANGED_FILE_PATHS }}
+          node . getReadabilityText ${{ steps.listPaths.outputs.CHANGED_FILE_PATHS }}
