@@ -2,11 +2,13 @@ name: Readability
 
 on: pull_request
 
-env:
-  PATHS_TO_FILES: This should be a space-delimited selection of paths to files that are changed in the PR that we want to convert to text for scoring
-
 jobs:
   getText:
+    name: Get file paths for files to score
+    id: getPaths
+    uses: jitterbit/get-changed-files@v1
+    run: |
+      echo '::set-output name=CHANGED_FILE_PATHS::${{ steps.files.outputs.all }}'
     name: Get text to score
     runs-on: ubuntu-latest
     steps:
@@ -25,4 +27,4 @@ jobs:
         run: |
           npm i
           npm run build
-          node . getReadabilityText $PATHS_TO_FILES
+          node . getReadabilityText ${{ steps.getPaths.outputs.CHANGED_FILE_PATHS }}
