@@ -9,11 +9,10 @@ jobs:
     steps:
       - name: Get file paths for files to score
         id: getPaths
-        uses: jitterbit/get-changed-files@v1
+        uses: tj-actions/changed-files@v23.2
       - name: List changed file paths to variable
         id: listPaths
-        run: |
-          echo '::set-output name=CHANGED_FILE_PATHS::${{ steps.getPaths.outputs.all_changed_files }}'
+        run: echo '::set-output name=CHANGED_FILE_PATHS::${{ steps.getPaths.outputs.all_changed_files }}'
       - name: Get docdoctor
         uses: actions/checkout@v3
         with: 
