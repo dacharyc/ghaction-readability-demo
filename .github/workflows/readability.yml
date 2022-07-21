@@ -7,13 +7,16 @@ jobs:
     name: Get text to score
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout into docdoctor
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
           path: 'docdoctor'
       - name: Get file paths for files to score
         id: getPaths
         uses: tj-actions/changed-files@v23.2
+        with: 
+          path: 'docdoctor'
       - name: List changed file paths to variable
         id: listPaths
         run: echo '::set-output name=CHANGED_FILE_PATHS::${{ steps.getPaths.outputs.all_changed_files }}'
