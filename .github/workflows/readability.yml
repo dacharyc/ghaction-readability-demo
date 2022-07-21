@@ -7,9 +7,11 @@ jobs:
     name: Get text to score
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - Checkout into docdoctor
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          path: 'docdoctor'
       - name: Get file paths for files to score
         id: getPaths
         uses: tj-actions/changed-files@v23.2
@@ -21,11 +23,13 @@ jobs:
         with: 
           repository: dacharyc/docdoctor
           ref: 'readability'
+          path: 'docdoctor'
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
           node-version: 15.x
       - name: Generate text from rST
+        working-directory: 'docdoctor'
         run: |
           npm i
           npm run build
