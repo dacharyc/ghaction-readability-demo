@@ -7,6 +7,9 @@ jobs:
     name: Get text to score
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Get file paths for files to score
         id: getPaths
         uses: tj-actions/changed-files@v23.2
