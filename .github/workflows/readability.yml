@@ -3,15 +3,15 @@ name: Readability
 on: pull_request
 
 jobs:
-  getText:
-    name: Get file paths for files to score
-    id: getPaths
-    uses: jitterbit/get-changed-files@v1
-    run: |
-      echo '::set-output name=CHANGED_FILE_PATHS::${{ steps.files.outputs.all }}'
+  scoreText:
     name: Get text to score
     runs-on: ubuntu-latest
     steps:
+      - name: Get file paths for files to score
+        id: getPaths
+        uses: jitterbit/get-changed-files@v1
+        run: |
+          echo '::set-output name=CHANGED_FILE_PATHS::${{ steps.files.outputs.all }}'
       - name: Get docdoctor
         uses: actions/checkout@v3
         with: 
