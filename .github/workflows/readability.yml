@@ -3,13 +3,12 @@ name: Readability
 on: pull_request
 
 jobs:
-  getFilePaths:
+  getText:
     name: Get file paths for files to score
     id: getPaths
     uses: jitterbit/get-changed-files@v1
     run: |
       echo '::set-output name=CHANGED_FILE_PATHS::${{ steps.files.outputs.all }}'
-  getText:
     name: Get text to score
     runs-on: ubuntu-latest
     steps:
@@ -28,4 +27,4 @@ jobs:
         run: |
           npm i
           npm run build
-          node . getReadabilityText CHANGED_FILE_PATHS
+          node . getReadabilityText ${{ steps.getPaths.outputs.CHANGED_FILE_PATHS }}
