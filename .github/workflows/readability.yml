@@ -8,9 +8,7 @@ jobs:
     id: getPaths
     uses: jitterbit/get-changed-files@v1
     run: |
-      for changed_file in ${{ steps.files.outputs.all }}; do
-        echo "${changed_file}"
-      done
+      echo '::set-output name=CHANGED_FILE_PATHS::${{ steps.files.outputs.all }}'
   getText:
     name: Get text to score
     runs-on: ubuntu-latest
@@ -30,4 +28,4 @@ jobs:
         run: |
           npm i
           npm run build
-          node . getReadabilityText ${{ steps.getPaths.outputs.stdout }}
+          node . getReadabilityText CHANGED_FILE_PATHS
