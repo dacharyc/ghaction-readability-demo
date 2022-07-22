@@ -2,6 +2,10 @@ name: Readability
 
 on: pull_request
 
+# Also see SCORES_DIR environment variable definition as a step below.
+env:
+  SCORES_FILE_NAME: Scores.txt
+
 jobs:
   scoreText:
     name: Parse text, score text, and report scores on PR.
@@ -34,6 +38,34 @@ jobs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             node ./docdoctor getReadabilityText $file
           done
-      - name: Checked parsed contents of file (debugging log statement)
+      - name: Set scores directory environment variable using workaround for home path expansion.
         run: |
-          cat output/source/sdk/swift/install.txt
+          echo "SCORES_DIR=$HOME/scores" >> $GITHUB_ENV
+      - name: Setup Python
+        uses: actions/setup-python@v4.1.0
+        with:
+            # We need Python version 3.5 or greater for rglob.
+            python-version: '3.6'
+            architecture: 'x64'
+      - name: Install textstat
+        run: pip install textstat
+      - name: Create scores directory.
+        run: mkdir $SCORES_DIR
+      - name: Calculate Readability score.
+        run: python $GITHUB_WORKSPACE/Calculate_Readability_Score.py
+      - name: Extract scores from downloaded artifact file into GitHub environment variable.
+        run: |
+          echo 'SCORES<<\n' >> $GITHUB_ENV
+          cat $SCORES_DIR/$SCORES_FILE_NAME >> $GITHUB_ENV
+          echo '\n' >> $GITHUB_ENV
+      - name: Leave a comment on the PR with the readability score.
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `${{ env.SCORES }}`
+            })
