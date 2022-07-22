@@ -14,7 +14,7 @@ scores_file_name = 'Scores.txt'
 
 # Creating the scores file.
 with open(os.path.join(scores_dir, scores_file_name), 'w') as scores_file:
-  scores_file.write('Readability scores for documents: \n')
+  scores_file.write('**Flesch Reading Ease** scores for changed documents: \n')
 
 # Find all text files to be scored.
 for text_file_path in Path(text_files_dir).rglob('*.txt'):
@@ -26,7 +26,8 @@ for text_file_path in Path(text_files_dir).rglob('*.txt'):
   # Write score to file.
   with open(os.path.join(scores_dir, scores_file_name), 'a') as scores_file:
     text_file_path_without_extension = str(text_file_path).replace('.txt', '')
-    scores_file.write('- **' + str(text_file_path_without_extension) + '**: ' + str(score) + '\n')
+    text_file_path_without_extension_and_without_prefix_path = text_file_path_without_extension.replace('output/','')
+    scores_file.write('- **' + str(text_file_path_without_extension_and_without_prefix_path) + '**: ' + str(score) + '\n')
 
 # Include a reference table for Flesch Reading Ease score.
 with open(os.path.join(scores_dir, scores_file_name), 'a') as scores_file:
