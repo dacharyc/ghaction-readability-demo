@@ -4,42 +4,33 @@ on: pull_request
 
 jobs:
   scoreText:
-    name: Get text to score
+    name: Parse text, score text, and report scores on PR.
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout into docdoctor
+      - name: Checkout current repo.
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          path: 'docdoctor'
-      - name: Get file paths for files to score
-        id: getPaths
+      - name: Get changed files.
+        id: changed-files
         uses: tj-actions/changed-files@v23.2
-        with: 
-          path: 'docdoctor'
-      - name: List changed file paths to variable
-        id: listPaths
+      - name: List changed files (debugging log statement).
         run: |
-          absolutePaths="docdoctor/source/sdk/node/install.txt"
-          # for filePath in ${{ steps.getPaths.outputs.all_changed_files }}; do
-          #  absolutePaths="$absolutePaths docdoctor/$filePath"
-          # done
-          echo '::set-output name=CHANGED_FILE_PATHS::${{$absolutePaths}}'
-      - name: Get docdoctor
+          echo ${{ steps.changed-files.outputs.all_changed_files }}
+      - name: Checkout docdoctor repo.
         uses: actions/checkout@v3
         with: 
           repository: dacharyc/docdoctor
           ref: 'readability'
           path: 'docdoctor'
-      - name: Use Node.js
+      - name: Install Node.js.
         uses: actions/setup-node@v1
         with:
           node-version: 15.x
-      - name: Generate text from rST
-        working-directory: 'docdoctor'
+      - name: Parse text from rST.
+        working-directory: $GITHUB_WORKSPACE/docdoctor
         run: |
           npm i
           npm run build
           ls
-          echo 'CHANGED_FILE_PATHS is ${{ steps.listPaths.outputs.CHANGED_FILE_PATHS }}'
-          node . getReadabilityText ${{ steps.listPaths.outputs.CHANGED_FILE_PATHS }}
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            node . getReadabilityText file
+          done
