@@ -24,7 +24,7 @@ jobs:
           for filePath in ${{ steps.getPaths.outputs.all_changed_files }}; do
             absolutePaths="$absolutePaths docdoctor/$filePath"
           done
-          echo '::set-output name=CHANGED_FILE_PATHS::"$absolutePaths"'
+          echo '::set-output name=CHANGED_FILE_PATHS::$absolutePaths'
       - name: Get docdoctor
         uses: actions/checkout@v3
         with: 
