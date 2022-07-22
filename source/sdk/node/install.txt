@@ -138,8 +138,7 @@ running Raspberry Pi OS (formerly Raspbian), follow the steps below:
       type checking and other features intended to make
       application-scale development more robust. If you'd like
       to use TypeScript, follow the TypeScript team's official
-      `Node Starter guide
-      <https://github.com/Microsoft/TypeScript-Node-Starter#typescript--node>`__.
+      Node Starter guide.
       Realm supports TypeScript natively and integrates easily
       into a TypeScript project.
 
