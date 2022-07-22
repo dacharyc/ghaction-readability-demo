@@ -20,12 +20,17 @@ jobs:
       - name: List changed file paths to variable
         id: listPaths
         run: |
-          echo '::set-output name=CHANGED_FILE_PATHS::${{ steps.getPaths.outputs.all_changed_files }}'
+          absolutePaths=""
+          for filePath in ${{ steps.getPaths.outputs.all_changed_files }}; do
+            absolutePaths="$absolutePaths docdoctor/$filePath"
+          done
+          echo '::set-output name=CHANGED_FILE_PATHS::"$absolutePaths"'
       - name: Get docdoctor
         uses: actions/checkout@v3
         with: 
           repository: dacharyc/docdoctor
           ref: 'readability'
+          path: 'docdoctor'
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
@@ -36,5 +41,5 @@ jobs:
           npm i
           npm run build
           ls
-          echo '${{ steps.listPaths.outputs.CHANGED_FILE_PATHS }}'
+          echo 'CHANGED_FILE_PATHS is ${{ steps.listPaths.outputs.CHANGED_FILE_PATHS }}'
           node . getReadabilityText ${{ steps.listPaths.outputs.CHANGED_FILE_PATHS }}
