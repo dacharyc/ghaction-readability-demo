@@ -21,6 +21,10 @@ jobs:
           repository: dacharyc/docdoctor
           ref: 'readability'
           path: 'docdoctor'
+      - name: Display directory structure (debugging log statement)
+        run: |
+          ls $GITHUB_WORKSPACE
+          ls $GITHUB_WORKSPACE/docdoctor
       - name: Install Node.js.
         uses: actions/setup-node@v1
         with:
