@@ -36,4 +36,4 @@ jobs:
           done
       - name: Checked parsed contents of file (debugging log statement)
         run: |
-        cat output/source/sdk/swift/install.txt
+          cat output/source/sdk/swift/install.txt
