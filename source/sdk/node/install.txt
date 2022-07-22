@@ -145,7 +145,7 @@ running Raspberry Pi OS (formerly Raspbian), follow the steps below:
 Import Realm
 ------------
 
-Add the following line to the top of your source files where
+Add the following line to the top of your source file where
 you want to use Realm:
 
 .. tabs-realm-languages::
