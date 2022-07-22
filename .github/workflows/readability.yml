@@ -26,11 +26,9 @@ jobs:
         with:
           node-version: 15.x
       - name: Parse text from rST.
-        working-directory: $GITHUB_WORKSPACE/docdoctor
         run: |
           npm i
           npm run build
-          ls
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            node . getReadabilityText file
+            node . getReadabilityText $GITHUB_WORKSPACE/$file
           done
