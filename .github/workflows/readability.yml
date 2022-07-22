@@ -26,7 +26,6 @@ jobs:
         with: 
           repository: dacharyc/docdoctor
           ref: 'readability'
-          path: 'docdoctor'
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
