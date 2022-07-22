@@ -21,18 +21,18 @@ jobs:
           repository: dacharyc/docdoctor
           ref: 'readability'
           path: 'docdoctor'
-      - name: Display directory structure (debugging log statement)
+      - name: Display workspace directory structure (debugging log statement)
         run: |
           ls $GITHUB_WORKSPACE
-          ls $GITHUB_WORKSPACE/docdoctor
       - name: Install Node.js.
         uses: actions/setup-node@v1
         with:
           node-version: 15.x
       - name: Parse text from rST.
+        working-directory: 'docdoctor'
         run: |
-          npm install $GITHUB_WORKSPACE/docdoctor
-          cd $GITHUB_WORKSPACE/docdoctor && npm run build
+          npm i
+          npm run build
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            node $GITHUB_WORKSPACE/docdoctor getReadabilityText $GITHUB_WORKSPACE/$file
+            node . getReadabilityText ../$file
           done
